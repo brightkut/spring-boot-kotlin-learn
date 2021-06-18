@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
-@WebMvcTest
-class MovieControllerTest (@Autowired val mockMvc: MockMvc){
+@WebMvcTest(controllers = [MovieController::class])
+class MovieControllerTest (@Autowired var mockMvc: MockMvc){
     @MockkBean
-    private lateinit var movieService: MovieService;
+    private lateinit var movieService: MovieService
 
     @Test
     fun insertMovie_success(){
@@ -43,7 +44,7 @@ class MovieControllerTest (@Autowired val mockMvc: MockMvc){
             content =  mockMovie.asJsonString()
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
-            status { isBadRequest() }
+            status { isInternalServerError() }
         }
     }
 
@@ -57,7 +58,33 @@ class MovieControllerTest (@Autowired val mockMvc: MockMvc){
             content =  mockMovie.asJsonString()
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
-            status { isBadRequest() }
+            status { isInternalServerError() }
+        }
+    }
+
+    @Test
+    fun test_validate_header_success(){
+        mockMvc.get("/api/test-validate-header"){
+            header("auth","123")
+        }.andExpect {
+            status { isOk() }
+        }
+    }
+
+    @Test
+    fun test_validate_header_failed_null(){
+        mockMvc.get("/api/test-validate-header"){
+        }.andExpect {
+            status { isInternalServerError() }
+        }
+    }
+
+    @Test
+    fun test_validate_header_failed_size(){
+        mockMvc.get("/api/test-validate-header"){
+            header("auth","1234")
+        }.andExpect {
+            status { isInternalServerError() }
         }
     }
 }
