@@ -15,9 +15,9 @@ data class Cinema(
         // can use option nullable true and false
         // not need to set nullable true you can set default null and optional field
         // can unique option
-        @Column(name = "cinemaName",unique = true)
+        @Column(name = "cinemaName", unique = true)
         val cinemaName: String? = null,
         //if need mandatory add nullable false
-        @Column(name = "price",nullable = false)
+        @Column(name = "price", nullable = false)
         val price: Int
 )

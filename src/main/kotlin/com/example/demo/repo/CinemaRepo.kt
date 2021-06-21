@@ -8,4 +8,7 @@ import javax.transaction.Transactional
 
 @Repository
 @Transactional
-interface CinemaRepo:JpaRepository<Cinema,CinemaCompositePkey>
+interface CinemaRepo:JpaRepository<Cinema,CinemaCompositePkey>{
+    fun getByCinemaName(name: String): Cinema
+    fun getByCinemaSubId(subId: Int): Cinema?
+}

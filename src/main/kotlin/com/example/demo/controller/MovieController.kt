@@ -29,6 +29,13 @@ class MovieController(val movieService: MovieService) {
         return ResponseEntity.ok(responseModel)
     }
 
+    @PutMapping("/movies/{id}")
+    fun updateMovieName(@PathVariable id : String,@RequestParam name:String): ResponseEntity<ResponseModel<Movie>>{
+        val responseModel = ResponseModel<Movie>(1000).setDataObj(movieService.updateMovieName(id,name))
+
+        return ResponseEntity.ok(responseModel)
+    }
+
     @GetMapping("/test-validate-header")
     // @NotNull can use without @Validated
     // @Size need to add @ Validated

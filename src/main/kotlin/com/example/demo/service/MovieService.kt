@@ -17,4 +17,10 @@ class MovieService (val movieRepo: MovieRepo){
 
         return movie
     }
+
+    fun updateMovieName(id:String,name : String): Movie{
+        movieRepo.updateMovieName(id,name)
+
+        return movieRepo.getById(id)
+    }
 }

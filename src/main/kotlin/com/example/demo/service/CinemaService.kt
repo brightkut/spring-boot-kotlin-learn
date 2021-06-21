@@ -11,4 +11,12 @@ class CinemaService (val cinemaRepo: CinemaRepo){
 
         return cinema
     }
+
+    fun getByName(name : String):Cinema{
+        return cinemaRepo.getByCinemaName(name)
+    }
+
+    fun getByCinemaSubId(subId: Int): Cinema? {
+        return cinemaRepo.getByCinemaSubId(subId)
+    }
 }
